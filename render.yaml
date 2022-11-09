@@ -1,0 +1,18 @@
+databases:
+  - name: portfolio_backend
+    databaseName: portfolio_backend
+    user: portfolio_backend
+
+services:
+  - type: web
+    name: portfolio_backend
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: portfolio_backend
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
